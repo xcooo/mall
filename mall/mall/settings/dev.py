@@ -30,7 +30,7 @@ SECRET_KEY = 'yc+r0hy=9qh=a$v86mr#zzucg2s6h%uwpov@oq91)6p-9yq67n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api.mall.com', '127.0.0.1', 'localhost', 'www.mall.com']
 
 
 # Application definition
