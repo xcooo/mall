@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 
     'rest_framework',
     # 'mall.apps.users.apps.UsersConfig',
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # 解决跨域请求
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -211,3 +213,12 @@ REST_FRAMEWORK = {
     # 异常处理
     'EXCEPTION_HANDLER': 'mall.utils.exceptions.exception_handler',
 }
+
+# CORS
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:8080',
+    'http://localhost:8080',
+    'http://www.mall.com:8080',
+    'http://api.mall.com:8000'
+)
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
