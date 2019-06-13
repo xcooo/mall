@@ -10,3 +10,12 @@
 
 # 图片验证码过期时间,单位为秒
 IMAGE_CODE_REDIS_EXPIRES = 5 * 60
+
+# 短信验证码过期时间
+SMS_CODE_REDIS_EXPIRES = 5 * 60
+
+# 短信发送记录
+SEND_SMS_CODE_INTERVAL = 1 * 60
+
+# 短信验证码信息模板
+SMS_CODE_TEMP_ID = 1
