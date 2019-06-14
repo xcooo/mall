@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sys
-
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,8 +30,8 @@ SECRET_KEY = 'yc+r0hy=9qh=a$v86mr#zzucg2s6h%uwpov@oq91)6p-9yq67n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['api.mall.com', '127.0.0.1', 'localhost', 'www.mall.com']
-
+# ALLOWED_HOSTS = ['api.mall.com', '127.0.0.1', 'localhost', 'www.mall.com','api.meiduo.site' 'www.meiduo.site']
+ALLOWED_HOSTS = ['api.meiduo.site', '127.0.0.1', 'localhost', 'www.meiduo.site']
 
 # Application definition
 
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # 'mall.apps.users.apps.UsersConfig',
     'users.apps.UsersConfig',
     'verifications.apps.VerificationsConfig',
+    'oauth.apps.OauthConfig',
 ]
 
 MIDDLEWARE = [
@@ -209,16 +210,41 @@ LOGGING = {
 # 指明自定义的用户模型类
 AUTH_USER_MODEL = 'users.User'
 
+# 认证方法
+AUTHENTICATION_BACKENDS = [
+    'users.utils.UsernameMobileAuthBackend',
+]
+
 REST_FRAMEWORK = {
     # 异常处理
     'EXCEPTION_HANDLER': 'mall.utils.exceptions.exception_handler',
+
+    # 认证
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication', # JWT认证
+        'rest_framework.authentication.SessionAuthentication',    # session认证
+        'rest_framework.authentication.BasicAuthentication',   # 基本认证
+    ),
+}
+# JWT
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),  # 有效期
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'users.utils.jwt_response_payload_handler', # 登陆  调用users.utils文件
 }
 
 # CORS
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:8080',
     'http://localhost:8080',
-    'http://www.mall.com:8080',
-    'http://api.mall.com:8000'
+    # 'http://www.mall.com:8080',
+    # 'http://api.mall.com:8000',
+    'http://www.meiduo.site:8080',
+    'http://api.meiduo.site:8000',
 )
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
+
+# QQ登陆
+QQ_CLIENT_ID = '101474184'
+QQ_REDIRECT_URI = 'http://www.meiduo.site:8080/oauth_callback.html'
+QQ_STATE = '/index.html'
+QQ_CLIENT_SECRET = 'c6ce949e04e12ecc909ae6a8b09b637c'
