@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'verifications.apps.VerificationsConfig',
     'oauth.apps.OauthConfig',
+    'areas.apps.AreasConfig',
 ]
 
 MIDDLEWARE = [
@@ -99,7 +100,7 @@ DATABASES = {
 
 # redis配置
 CACHES = {
-    # 其他缓存
+    # DRF缓存
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/0",
@@ -259,3 +260,11 @@ EMAIL_HOST_USER = '15700750042@163.com'
 EMAIL_HOST_PASSWORD = 'xincheng123'
 #收件人看到的发件人
 EMAIL_FROM = '幸运商城<15700750042@163.com>'
+
+# DRF扩展
+REST_FRAMEWORK_EXTENSIONS = {
+    # 缓存时间
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 60,
+    # 缓存存储
+    'DEFAULT_USE_CACHE': 'default',
+}
