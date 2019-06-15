@@ -7,3 +7,6 @@
 """
 # 邮件激活有效期
 VERIFY_EMAIL_TOKEN_EXPIRES = 24 * 60 * 60
+
+# 收货地址
+USER_ADDRESS_COUNTS_LIMIT = 20
