@@ -12,6 +12,9 @@ from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 from celery_tasks.email.tasks import send_active_email
 from .models import Address
+from . import constants
+
+from goods.models import SKU
 
 from .models import User
 
@@ -184,3 +187,54 @@ class AddressTitleSerializer(serializers.ModelSerializer):
         model = Address
         fields = ('title',)
 
+
+class AddUserBrowsingHistorySerializer(serializers.Serializer):
+    """
+    添加用户浏览历史序列化器
+    """
+    sku_id = serializers.IntegerField(label='商品编号', min_value=1)
+
+    # 验证前端传送过来的sku_id
+    def validate_sku_id(self, value):
+        """
+       检验sku_id是否存在
+       """
+        try:
+            # 查询商品
+            SKU.objects.get(id=value)
+        except SKU.DoesNotExist:
+            raise serializers.ValidationError('该商品不存在')
+        return value
+
+    def create(self, validated_data):
+        # 商品sku 编号
+        sku_id = validated_data['sku_id']
+
+        # user_id 用户
+        user = self.context['request'].user
+
+        redis_conn = get_redis_connection('history')
+        pl = redis_conn.pipeline()
+
+        redis_key = 'history_%s'% user.id
+        # 去重 移除已经存在的本商品浏览记录
+        pl.lrem(redis_key, 0, sku_id)
+
+        # 保存 增加   添加新的浏览记录
+        pl.lpush(redis_key, sku_id)
+
+        # 截断   只保存最多5条记录
+        pl.ltrim(redis_key, 0, constants.USER_BROWSE_HISTORY_MAX_LIMIT-1)
+
+        pl.execute()
+
+        return validated_data
+
+
+class SKUSerializer(serializers.ModelSerializer):
+    '''
+    商品历史记录序列化器
+    '''
+    class Meta:
+        model = SKU
+        fields = ('id', 'name', 'price', 'default_image_url', 'comments')
