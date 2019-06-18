@@ -239,6 +239,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',    # session认证
         'rest_framework.authentication.BasicAuthentication',   # 基本认证
     ),
+    # 分页
+    'DEFAULT_PAGINATION_CLASS': 'mall.utils.pagination.StandardResultsSetPagination',
 }
 # JWT
 JWT_AUTH = {

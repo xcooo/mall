@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^user/$',views.UserDetailView.as_view()), # 个人中心基本信息
     url(r'^email/$',views.EmailView.as_view()),  # 保存邮箱并发送邮件
     url(r'^emails/verification/$', views.VerifyEmailView.as_view()),# 验证邮件
+    url(r'^browse_histories/$', views.UserBrowsingHistoryView.as_view()) # 用户浏览历史记录
 ]
 
 router = DefaultRouter()
