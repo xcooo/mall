@@ -50,12 +50,13 @@ INSTALLED_APPS = [
 
     'rest_framework',
     # 'mall.apps.users.apps.UsersConfig',
-    'users.apps.UsersConfig',
-    'verifications.apps.VerificationsConfig',
-    'oauth.apps.OauthConfig',
-    'areas.apps.AreasConfig',
-    'contents.apps.ContentsConfig',
-    'goods.apps.GoodsConfig',
+    'users.apps.UsersConfig',  # 用户
+    'verifications.apps.VerificationsConfig',  # 验证码
+    'oauth.apps.OauthConfig',   # qq第三方登陆
+    'areas.apps.AreasConfig',   # 收货地址
+    'contents.apps.ContentsConfig', # 广告
+    'goods.apps.GoodsConfig',  # 商品
+    'carts.apps.CartsConfig', # 购物车
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,14 @@ CACHES = {
     "history": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/3",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    # 保存购物车
+    "cart": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/4",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
