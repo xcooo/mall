@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'goods.apps.GoodsConfig',  # 商品
     'carts.apps.CartsConfig', # 购物车
     'orders.apps.OrdersConfig', # 订单
+    'payment.apps.PaymentConfig' # 支付宝
 ]
 
 MIDDLEWARE = [
