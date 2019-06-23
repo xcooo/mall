@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     'ckeditor_uploader',  # 富文本编辑器上传图片模块
     'django_crontab',  # 定时任务
     'haystack', # 模块化搜索  对接搜索引擎
+    'xadmin',
+    'crispy_forms',
+    'reversion',
 
     'rest_framework',
     # 'mall.apps.users.apps.UsersConfig',
@@ -103,6 +106,14 @@ DATABASES = {
         'PORT': 3306,  # 数据库端口
         'USER': 'mall',  # 数据库用户名
         'PASSWORD': 'mall',  # 数据库用户密码
+        'NAME': 'mall'  # 数据库名字
+    },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '127.0.0.1',  # 数据库主机
+        'PORT': 8306,  # 数据库端口
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': 'mysql',  # 数据库用户密码
         'NAME': 'mall'  # 数据库名字
     }
 }
@@ -341,3 +352,6 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 ALIPAY_APPID = "2016101100657225"
 ALIPAY_URL = "https://openapi.alipaydev.com/gateway.do"
 ALIPAY_DEBUG = True
+
+# 配置读写分离
+DATABASE_ROUTERS = ['mall.utils.db_router.MasterSlaveDBRouter']

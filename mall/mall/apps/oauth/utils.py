@@ -70,12 +70,13 @@ class OAuthQQ(object):
 
             # 解析 access token
             resp_dict = urllib.parse.parse_qs(resp_data)
+            print(resp_dict)
         except Exception as e:
             logger.error('获取access_token异常: %s' % e)
             raise OAuthQQAPIError
         else:
             access_token = resp_dict.get('access_token')
-
+            # print(access_token)
             return access_token[0]
 
     # 通过access token 获取 openid
