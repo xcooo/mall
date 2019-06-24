@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = 'yc+r0hy=9qh=a$v86mr#zzucg2s6h%uwpov@oq91)6p-9yq67n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['api.mall.com', '127.0.0.1', 'localhost', 'www.mall.com','api.meiduo.site' 'www.meiduo.site']
 ALLOWED_HOSTS = ['api.meiduo.site', '127.0.0.1', 'localhost', 'www.meiduo.site']
@@ -279,6 +279,7 @@ CORS_ORIGIN_WHITELIST = (
     # 'http://api.mall.com:8000',
     'http://www.meiduo.site:8080',
     'http://api.meiduo.site:8000',
+    'http://www.meiduo.site',
 )
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
 
